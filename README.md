@@ -5,15 +5,15 @@ Claude Code を使った英語お勉強レポジトリ。
 
 > SRS: Spaced Repetition Software
 
-## 🚀 使い方
+## 🚀 セットアップ
+
+⚠️[Rust](https://rustup.rs/) が必要です⚠️
 
 ```bash
 git clone https://github.com/takemokun/c-na-ringo.git
 cd c-na-ringo
-claude
+claude /ringo-setup
 ```
-
-このリポジトリで Claude Code を起動し、各スキルを使ってお勉強できます📝
 
 > YOLOモード (`--dangerously-skip-permissions`) 推奨だけど自己責任で！💀
 
@@ -79,4 +79,5 @@ claude
 
 ## 💾 データ
 
-学習記録は `data/` に保存されます（gitignore済み）
+学習記録は `data/` に保存されます（gitignore済み）。
+SRSのデータ管理は Rust製の `ringo-srs` CLI が担当しています（SM-2アルゴリズム）。
