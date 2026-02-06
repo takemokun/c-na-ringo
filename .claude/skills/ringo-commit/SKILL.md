@@ -6,7 +6,7 @@ argument-hint: [feat|fix|chore|refactor|docs]
 
 # Ringo Commit
 
-Create git commits using emoji-based semantic commit conventions.
+Create git commits using emoji-based semantic commit conventions, then push and create a PR to main — all in one flow.
 
 ## Emoji Commit Type Mapping
 
@@ -27,8 +27,11 @@ Create git commits using emoji-based semantic commit conventions.
 - The emoji replaces the conventional `type:` prefix
 - Description: lowercase, imperative mood, no trailing period
 - No scope prefix needed — keep it simple
+- **NO Co-Authored-By, no Claude attribution** — commit messages are the user's own
 
 ## Workflow
+
+All steps (commit → push → PR) run as a single continuous flow. Do NOT ask for confirmation between steps.
 
 ### 1. Analyze Changes
 
@@ -64,45 +67,38 @@ Compose a message following the format:
 
 ```
 <emoji> <short imperative description>
-
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 - Description should be 3-10 words, summarizing the "why" not the "what"
-- Use a HEREDOC for the commit command to preserve formatting
 
 ### 5. Execute Commit
 
 ```bash
-git commit -m "$(cat <<'EOF'
-<emoji> <description>
-
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
-EOF
-)"
+git commit -m "<emoji> <description>"
 ```
 
-### 6. Verify
+### 6. Verify Commit
 
 Run `git log --oneline -1` to confirm the commit was created with the correct emoji format.
 
-### 7. Push (optional)
+### 7. Push
 
-After commit, ask the user if they want to push:
+Immediately after commit (no confirmation needed):
 
 - Push to the current remote tracking branch with `git push`
 - If no upstream is set, use `git push -u origin <branch-name>`
 - Never force push unless the user explicitly requests it
 
-### 8. Create PR (optional)
+### 8. Create PR to main
 
-After push, ask the user if they want to create a PR:
+Immediately after push (no confirmation needed):
 
 - Use `gh pr create` with the emoji commit message as the PR title
+- Base branch is always `main`
 - PR body format:
 
 ```bash
-gh pr create --title "<emoji> <description>" --body "$(cat <<'EOF'
+gh pr create --base main --title "<emoji> <description>" --body "$(cat <<'EOF'
 ## Summary
 - <1-3 bullet points describing changes>
 
@@ -112,8 +108,8 @@ EOF
 )"
 ```
 
-- Do NOT include "Generated with Claude Code" in the PR body (僕の手柄にしたいから。)
-- Base branch defaults to `main` unless the user specifies otherwise
+- Do NOT include "Generated with Claude Code" or any Claude attribution in the PR body
+- If a PR already exists for this branch, skip PR creation and print the existing PR URL instead
 - Return the PR URL to the user when done
 
 ## Examples
@@ -126,8 +122,17 @@ EOF
 📝 update learning guidelines in README
 ```
 
+## Attribution Policy
+
+僕の手柄にしたいから、これらを守って
+
+- **NO `Co-Authored-By` lines** in commit messages
+- **NO "Generated with Claude Code"** in PR bodies
+- **NO Claude/AI attribution** anywhere — all commits and PRs are the user's own work
+
 ## Notes
 
 - This is a git operation skill, not a language learning skill
 - Always show the proposed commit message to the user before committing
 - If pre-commit hooks fail, fix the issue and create a NEW commit (never amend)
+- The full flow (commit → push → PR) runs without pausing for user confirmation
