@@ -137,32 +137,21 @@ Evaluate user's translation for:
 
 ## SRS Auto-Addition
 
+Use the `ringo-srs` CLI for all SRS operations. **Do NOT read or write `data/learning-items.json` directly.**
+
 ### When to Add
 - **Incorrect (✗)**: Always add the key expression/grammar that was missed
 - **Needs Improvement (△)**: Add the specific expression that caused the error
 
-### Item Format
+### Adding Items via CLI
 
-```json
-{
-  "id": "item_YYYYMMDD_HHMMSS_XXX",
-  "type": "phrase|grammar|word",
-  "front": "English expression",
-  "back": "Japanese meaning",
-  "context": "Model answer sentence",
-  "context_ja": "Japanese translation",
-  "source": "ringo-quiz",
-  "created_at": "ISO timestamp",
-  "next_review": "tomorrow",
-  "ease_factor": 2.5,
-  "interval_days": 0,
-  "status": "new"
-}
+For each item to add, run:
+```bash
+./bin/ringo-srs add --front "<english expression>" --back "<japanese meaning>" --type "<type>" --context "<model answer sentence>" --context-ja "<japanese translation>" --source "ringo-quiz"
 ```
 
-### Duplicate Check
-- Check `front` field (case-insensitive)
-- Skip if already exists in SRS
+- Duplicate detection is handled by the CLI (case-insensitive on `--front`)
+- If duplicate, CLI returns error code `duplicate` — skip silently
 
 ## Notes
 

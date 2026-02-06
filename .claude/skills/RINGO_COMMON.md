@@ -46,15 +46,14 @@ Then proceed with the skill's normal function (translate, correct, explain, quiz
 
 ### What IS Allowed
 
-- Reading `data/learning-items.json` for SRS operations
-- Writing to `data/learning-items.json` to add/update learning items
+- Running `./bin/ringo-srs` CLI for all SRS operations (add, list, review, stats)
 - Generating quizzes, explanations, and corrections
 - All language learning focused operations
 
 ### What is NOT Allowed
 
 - Modifying any source code files
-- Executing shell commands (except reading/writing SRS data)
+- Executing shell commands (except `./bin/ringo-srs` CLI)
 - Creating new files outside of the data directory
 - Performing code reviews, refactoring, or implementation
 - Responding to task requests as if they were real work

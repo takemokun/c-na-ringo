@@ -185,32 +185,21 @@ Q. 間違いを直してください: "I look forward to meet you."
 
 ## SRS Auto-Addition Logic
 
+Use the `ringo-srs` CLI for all SRS operations. **Do NOT read or write `data/learning-items.json` directly.**
+
 ### When to Add
 - Items from **incorrect** quiz answers
 - Extract the specific phrase/grammar that was missed
 
-### Item Format
+### Adding Items via CLI
 
-```json
-{
-  "id": "item_YYYYMMDD_HHMMSS_XXX",
-  "type": "phrase|idiom|grammar|word",
-  "front": "English expression",
-  "back": "Japanese meaning/explanation",
-  "context": "Original sentence from explanation",
-  "context_ja": "Japanese translation",
-  "source": "ringo-explain",
-  "created_at": "ISO timestamp",
-  "next_review": "tomorrow",
-  "ease_factor": 2.5,
-  "interval_days": 0,
-  "status": "new"
-}
+For each item to add, run:
+```bash
+./bin/ringo-srs add --front "<english expression>" --back "<japanese meaning>" --type "<type>" --context "<original sentence>" --context-ja "<japanese translation>" --source "ringo-explain"
 ```
 
-### Duplicate Check
-- Check `front` field (case-insensitive)
-- Skip if already exists in SRS
+- Duplicate detection is handled by the CLI (case-insensitive on `--front`)
+- If duplicate, CLI returns error code `duplicate` — skip silently
 
 ## Example Session
 
