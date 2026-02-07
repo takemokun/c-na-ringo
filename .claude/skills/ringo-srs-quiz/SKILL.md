@@ -78,13 +78,29 @@ Response:
 ## Quiz Flow
 
 ### 1. Question Display
+
+**CRITICAL: Never show the answer in the question. Choose display based on item type:**
+
+**For word/phrase/idiom items** (Japanese → English):
 ```
 【クイズ #{current}/{total}】
 タイプ: {type}
-意味: {japanese meaning}
+意味: {back}
 
-あなたの回答:
+英語で書いてください:
 ```
+
+**For grammar items**:
+```
+【クイズ #{current}/{total}】
+タイプ: grammar
+文法ポイント: {front}
+日本語の意味: {context_ja}
+
+この文法を使って英語で書いてください:
+```
+
+**IMPORTANT: For grammar items, NEVER display the `back` field or `context` field in the question — they contain the English answer.**
 
 ### 2. Answer Evaluation
 
